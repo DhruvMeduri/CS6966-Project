@@ -99,7 +99,7 @@ def load_image_tensors(class_name, root_path='data/tcav/image/imagenet/', transf
 # In[4]:
 
 
-def assemble_concept(name, id, concepts_path="data/tcav/image/concepts/"):
+def assemble_concept(name, id, concepts_path="CS6966-Project/data/tcav/image/concepts/"):
     concept_path = os.path.join(concepts_path, name) + "/"
     dataset = CustomIterableDataset(get_tensor_from_filename, concept_path)
     concept_iter = dataset_to_dataloader(dataset)
@@ -126,7 +126,7 @@ def assemble_concept(name, id, concepts_path="data/tcav/image/concepts/"):
 # In[5]:
 
 
-concepts_path = "./data/tcav/image/concepts/"
+concepts_path = "./CS6966-Project/data/tcav/image/concepts/"
 
 stripes_concept = assemble_concept("striped", 0, concepts_path=concepts_path)
 zigzagged_concept = assemble_concept("zigzagged", 1, concepts_path=concepts_path)
@@ -214,7 +214,7 @@ experimental_set_rand = [[stripes_concept, random_0_concept], [stripes_concept, 
 
 
 # Load sample images from folder
-zebra_imgs = load_image_tensors('zebra', transform=False)
+zebra_imgs = load_image_tensors('zebra', transform=False)#
 
 
 # Visualizing some of the images that we will use for making predictions and explaining those predictions by the means of concepts defined above.
@@ -223,7 +223,7 @@ zebra_imgs = load_image_tensors('zebra', transform=False)
 
 
 fig, axs = plt.subplots(1, 5, figsize = (25, 5))
-axs[0].imshow(zebra_imgs[40])
+#axs[0].imshow(zebra_imgs[40])
 axs[1].imshow(zebra_imgs[41])
 axs[2].imshow(zebra_imgs[34])
 axs[3].imshow(zebra_imgs[31])
