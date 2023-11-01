@@ -186,7 +186,7 @@ layers=['inception4c', 'inception4d', 'inception4e']
 mytcav = TCAV(model=model,
               layers=layers,
               layer_attr_method = LayerIntegratedGradients(
-                model, None, multiply_by_inputs=False, n_steps = 1))
+                model, None, multiply_by_inputs=False))
 
 
 # ##### Defining experimantal sets for CAV
