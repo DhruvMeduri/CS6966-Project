@@ -26,7 +26,7 @@
 
 import numpy as np
 import os, glob
-
+import random
 import matplotlib.pyplot as plt
 
 from PIL import Image
@@ -297,7 +297,7 @@ def plot_tcav_scores(experimental_sets, tcav_scores):
         # Create legend & Show graphic
         _ax.legend(fontsize=16)
 
-    plt.savefig()
+    plt.savefig(str(random.randint(1000)))
     plt.show()
 
 
