@@ -258,7 +258,7 @@ zebra_ind = 340
 tcav_scores_w_random = mytcav.interpret(inputs=zebra_tensors,
                                         experimental_sets=experimental_set_rand,
                                         target=zebra_ind,
-                                        n_steps=5,
+                                        n_steps=1,
                                        )
 tcav_scores_w_random
 
@@ -327,7 +327,7 @@ experimental_set_zig_dot = [[stripes_concept, zigzagged_concept, dotted_concept]
 tcav_scores_w_zig_dot = mytcav.interpret(inputs=zebra_tensors,
                                          experimental_sets=experimental_set_zig_dot,
                                          target=zebra_ind,
-                                         n_steps=5)
+                                         n_steps=1)
 
 
 # In[18]:
