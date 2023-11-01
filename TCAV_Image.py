@@ -297,6 +297,7 @@ def plot_tcav_scores(experimental_sets, tcav_scores):
         # Create legend & Show graphic
         _ax.legend(fontsize=16)
 
+    plt.savefig()
     plt.show()
 
 
