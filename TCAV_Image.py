@@ -82,7 +82,7 @@ def get_tensor_from_filename(filename):
     return transform(img)
 
 
-def load_image_tensors(class_name, root_path='data/tcav/image/imagenet/', transform=True):
+def load_image_tensors(class_name, root_path='CS6966-Project/data/tcav/image/imagenet/', transform=True):
     path = os.path.join(root_path, class_name)
     filenames = glob.glob(path + '/*.jpg')
 
