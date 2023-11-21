@@ -118,8 +118,8 @@ mytcav = TCAV(model=model,
 
 dic = mytcav.generate_activation(layers,stripes_concept)
 
-temp_1 = torch.load('./cav/av/default_model_id/striped-0/inception4c/0.pt')# For striped
-temp_2 = torch.load('./cav/av/default_model_id/striped-0/inception4c/1.pt')# For striped
+temp_1 = torch.load('./cav/av/default_model_id/striped-0/inception4d/0.pt')# For striped
+temp_2 = torch.load('./cav/av/default_model_id/striped-0/inception4d/1.pt')# For striped
 concept_activations = torch.cat((temp_1,temp_2))
 concept_activations = np.array(concept_activations)
 #print(len(concept_activations))
@@ -132,15 +132,15 @@ concept_labels = np.array(concept_labels)
 
 #For getting the activations of the random set
 
-dic = mytcav.generate_activation(layers,random_0_concept)
+dic = mytcav.generate_activation(layers,dotted_concept)
 
-temp_1 = torch.load('./cav/av/default_model_id/random_0-3/inception4c/0.pt')# For random concept
-temp_2 = torch.load('./cav/av/default_model_id/random_0-3/inception4c/1.pt')# For random concept
+temp_1 = torch.load('./cav/av/default_model_id/dotted-2/inception4d/0.pt')# For random concept
+temp_2 = torch.load('./cav/av/default_model_id/dotted-2/inception4d/1.pt')# For random concept
 random_activations = torch.cat((temp_1,temp_2))
 random_activations = np.array(random_activations)
 random_labels = []
 for i in range(len(random_activations)):
-    random_labels.append(0)
+    random_labels.append(-1)
 random_labels = np.array(random_labels)
 
 #Now combining everything  for the SVM
@@ -151,6 +151,7 @@ labels = np.concatenate((concept_labels,random_labels))
 print("SVM Running")
 clf = svm.SVC(kernel='linear',probability=True)
 clf.fit(activations, labels)
+print(clf.intercept_)
 
 # Now to get the gradients of the zebra class inputs
 
@@ -158,10 +159,17 @@ zebra_imgs = load_image_tensors('zebra', transform=False)#
 zebra_tensors = torch.stack([transform(img) for img in zebra_imgs])
 #print(zebra_tensors.shape)
 #input = torch.randn(2, 3, 32, 32, requires_grad=True)
-
-grad= LayerGradientXActivation(model,model.inception4c)
-check = grad.attribute(zebra_tensors,340)
+print("Gradient")
+grad= LayerIntegratedGradients(model,model.inception4d)
+check = grad.attribute(zebra_tensors,target=340,n_steps=1)
 check = torch.reshape(check,(check.shape[0],activations.shape[1]))
 check = check.detach().numpy()
 print(check.shape)
-print(clf.predict_proba(check))
+
+# This is the notation of the paper
+S = clf.decision_function(check)-clf.intercept_
+count = 0 
+for i in S:
+    if i>=0:
+        count = count + 1
+print("Relative TCAV: ",count/len(S))
