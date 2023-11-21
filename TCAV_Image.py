@@ -82,7 +82,7 @@ def get_tensor_from_filename(filename):
     return transform(img)
 
 
-def load_image_tensors(class_name, root_path='CS6966-Project/data/tcav/image/imagenet/', transform=True):
+def load_image_tensors(class_name, root_path='./data/tcav/image/imagenet/', transform=True):
     path = os.path.join(root_path, class_name)
     filenames = glob.glob(path + '/*.jpg')
 
@@ -90,6 +90,8 @@ def load_image_tensors(class_name, root_path='CS6966-Project/data/tcav/image/ima
     for filename in filenames:
         img = Image.open(filename).convert('RGB')
         tensors.append(transform(img) if transform else img)
+    
+    #print(tensors)
     
     return tensors
 
@@ -99,7 +101,7 @@ def load_image_tensors(class_name, root_path='CS6966-Project/data/tcav/image/ima
 # In[4]:
 
 
-def assemble_concept(name, id, concepts_path="CS6966-Project/data/tcav/image/concepts/"):
+def assemble_concept(name, id, concepts_path="./data/tcav/image/concepts/"):
     concept_path = os.path.join(concepts_path, name) + "/"
     dataset = CustomIterableDataset(get_tensor_from_filename, concept_path)
     concept_iter = dataset_to_dataloader(dataset)
@@ -126,7 +128,7 @@ def assemble_concept(name, id, concepts_path="CS6966-Project/data/tcav/image/con
 # In[5]:
 
 
-concepts_path = "./CS6966-Project/data/tcav/image/concepts/"
+concepts_path = "./data/tcav/image/concepts/"
 
 stripes_concept = assemble_concept("striped", 0, concepts_path=concepts_path)
 zigzagged_concept = assemble_concept("zigzagged", 1, concepts_path=concepts_path)
@@ -223,8 +225,8 @@ zebra_imgs = load_image_tensors('zebra', transform=False)#
 
 
 fig, axs = plt.subplots(1, 5, figsize = (25, 5))
-#axs[0].imshow(zebra_imgs[40])
-axs[1].imshow(zebra_imgs[41])
+axs[0].imshow(zebra_imgs[40])
+axs[1].imshow(zebra_imgs[40])
 axs[2].imshow(zebra_imgs[34])
 axs[3].imshow(zebra_imgs[31])
 axs[4].imshow(zebra_imgs[30])
