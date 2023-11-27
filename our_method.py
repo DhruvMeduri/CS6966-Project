@@ -150,7 +150,14 @@ labels = np.concatenate((concept_labels,random_labels))
 print("SVM Running")
 clf = svm.SVC(kernel='rbf',probability=True)
 clf.fit(activations, labels)
-print(clf.intercept_)
+#For computing the training accuracy
+count = 0 
+temp = clf.predict(activations)
+for i in range(len(temp)):
+    if temp[i] == labels[i]:
+        count = count + 1
+print("Training Accuracy: ", count/len(labels))
+
 
 # Now to get the gradients of the zebra class inputs
 layer_act = LayerActivation(model, model.inception5a)
