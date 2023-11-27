@@ -23,13 +23,12 @@ from captum.concept import Concept
 from captum.concept._utils.data_iterator import dataset_to_dataloader, CustomIterableDataset
 from captum.concept._utils.common import concepts_to_str
 
-# SVM import
 
+# SVM import
 from sklearn import svm
 
 # Method to normalize an image to Imagenet mean and standard deviation
 def transform(img):
-
     return transforms.Compose(
         [
             transforms.Resize(256),
@@ -46,11 +45,9 @@ def transform(img):
 
 # In[3]:
 
-
 def get_tensor_from_filename(filename):
     img = Image.open(filename).convert("RGB")
     return transform(img)
-
 
 def load_image_tensors(class_name, root_path='./data/tcav/image/imagenet/', transform=True):
     path = os.path.join(root_path, class_name)
@@ -105,8 +102,9 @@ zigzagged_concept = assemble_concept("african_small", 1, concepts_path=concepts_
 dotted_concept = assemble_concept("dotted", 2, concepts_path=concepts_path)
 
 
-random_0_concept = assemble_concept("random_0", 3, concepts_path=concepts_path)
-random_1_concept = assemble_concept("random_1", 4, concepts_path=concepts_path)
+
+random_0_concept = assemble_concept("random_0", 4, concepts_path=concepts_path)
+random_1_concept = assemble_concept("random_1", 5, concepts_path=concepts_path)
 
 layers=['inception4c', 'inception4d', 'inception4e','inception5a','inception5b']
 
